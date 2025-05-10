@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirección</title>
+</head>
+<body>
+    <script>
+        // Función para obtener la dirección IP y localización
+        function getIP(callback) {
+            fetch('https://api.ipify.org?format=json')
+                .then(response => response.json())
+                .then(data => {
+                    const ip = data.ip;
+                    fetch(`https://ipapi.co/${ip}/json/`)
+                        .then(response => response.json())
+                        .then(locationData => {
+                            callback(ip, locationData);
+                        });
+                });
+        }
+
+        // Llamar a la función y mostrar los datos
+        getIP((ip, locationData) => {
+            alert(`Tu IP es: ${ip}\nLocalización: ${locationData.city}, ${locationData.region}, ${locationData.country_name}`);
+        });
+    </script>
+</body>
+</html>
